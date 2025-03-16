@@ -86,7 +86,8 @@ jobs:
       - name: Validate and Process Review Result File
         run: |
           if [ -f review_result.txt ]; then
-            echo "review_result.txt 파일이 정상적으로 생성되었습니다."
+            echo "review_result.txt 파일 내용:"
+            cat review_result.txt  # review_result.txt 파일의 내용을 출력
             
             # 마크다운 문법 제거 후 파일 내용 확인
             cleaned_content=$(cat review_result.txt | sed 's/^```json//g' | sed 's/```//g')
