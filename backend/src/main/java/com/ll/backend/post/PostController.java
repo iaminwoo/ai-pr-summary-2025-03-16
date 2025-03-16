@@ -12,22 +12,22 @@ class PostController {
     private final PostService postService;
 
     @GetMapping
-    public List<Post> getAllPosts() {
+    public List<PostDto> getAllPosts() {
         return postService.getAllPosts();
     }
 
     @GetMapping("/{id}")
-    public Post getPostById(@PathVariable Long id) {
+    public PostDto getPostById(@PathVariable Long id) {
         return postService.getPostById(id);
     }
 
     @PostMapping
-    public Post createPost(@RequestBody Post post) {
+    public PostDto createPost(@RequestBody PostDto post) {
         return postService.createPost(post);
     }
 
     @PutMapping("/{id}")
-    public Post updatePost(@PathVariable Long id, @RequestBody Post post) {
+    public PostDto updatePost(@PathVariable Long id, @RequestBody PostDto post) {
         return postService.updatePost(id, post);
     }
 

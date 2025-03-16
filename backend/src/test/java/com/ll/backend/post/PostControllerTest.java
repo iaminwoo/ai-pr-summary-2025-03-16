@@ -40,7 +40,7 @@ class PostControllerTest {
 
     @Test
     void testGetPostById() throws Exception {
-        Post firstPost = postRepository.findAll().getFirst();  // 기본 데이터 중 첫 번째 게시물 가져오기
+        Post firstPost = postRepository.findAll().getFirst();  // 첫 번째 게시물 가져오기
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/posts/" + firstPost.getId()))
                 .andExpect(status().isOk())
@@ -50,11 +50,11 @@ class PostControllerTest {
 
     @Test
     void testCreatePost() throws Exception {
-        Post post = new Post("New Title", "New Content");
+        PostDto newPostDto = new PostDto("New Title", "New Content");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/posts")
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(post)))
+                        .content(objectMapper.writeValueAsString(newPostDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("New Title"))
                 .andExpect(jsonPath("$.content").value("New Content"));
@@ -67,11 +67,11 @@ class PostControllerTest {
     @Test
     void testUpdatePost() throws Exception {
         Post firstPost = postRepository.findAll().getFirst();
-        Post updatedPost = new Post("Updated Title", "Updated Content");
+        PostDto updatedPostDto = new PostDto("Updated Title", "Updated Content");
 
         mockMvc.perform(MockMvcRequestBuilders.put("/api/posts/" + firstPost.getId())
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(updatedPost)))
+                        .content(objectMapper.writeValueAsString(updatedPostDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Updated Title"))
                 .andExpect(jsonPath("$.content").value("Updated Content"));
