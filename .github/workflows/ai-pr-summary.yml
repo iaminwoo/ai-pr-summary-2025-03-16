@@ -38,11 +38,11 @@ jobs:
         with:
           script: |
             const fs = require("fs");
-            const diff_output = fs.readFileSync("diff.txt", 'utf8');  # diff.txt 파일 읽기
+            const diff_output = fs.readFileSync("diff.txt", 'utf8');  // diff.txt 파일 읽기
             
             const { GoogleGenerativeAI } = require("@google/generative-ai");
-            const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");  # Gemini API 키로 생성자 인스턴스 생성
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });  # Gemini 모델 설정
+            const genAI = new GoogleGenerativeAI("${{ secrets.GEMINI_API_KEY }}");  // Gemini API 키로 생성자 인스턴스 생성
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });  // Gemini 모델 설정
 
             let prompt = `
               다음은 깃허브 PR 에 올라온 수정된 코드들 입니다.
@@ -62,10 +62,10 @@ jobs:
 
               각 파일 내용이 끝나면 <br>으로 한 줄을 띄워주세요.
               
-              <git diff>${diff_output}</git diff>`;  # diff 내용과 함께 요약 프롬프트 작성
+              <git diff>${diff_output}</git diff>`;  // diff 내용과 함께 요약 프롬프트 작성
 
             try {
-              const result = await model.generateContent(prompt);  # Gemini API 호출하여 요약 생성
+              const result = await model.generateContent(prompt);  // Gemini API 호출하여 요약 생성
               const response = await result.response;
               const text = await response.text();
 
@@ -74,11 +74,11 @@ jobs:
                 throw new Error("Gemini API 응답이 비어 있습니다.");
               }
 
-              fs.writeFileSync('review_result.txt', text);  # 응답을 파일로 저장
+              fs.writeFileSync('review_result.txt', text);  // 응답을 파일로 저장
               console.log("✅ Gemini API 응답을 review_result.txt 파일에 저장했습니다.");
             } catch (error) {
-              console.error("❌ Gemini API 요청 중 오류 발생:", error);  # 오류 발생 시 에러 메시지 출력
-              process.exit(1);  # 워크플로 종료
+              console.error("❌ Gemini API 요청 중 오류 발생:", error);  // 오류 발생 시 에러 메시지 출력
+              process.exit(1);  // 워크플로 종료
             }
 
       - name: Format PR Review Summary for Comment
